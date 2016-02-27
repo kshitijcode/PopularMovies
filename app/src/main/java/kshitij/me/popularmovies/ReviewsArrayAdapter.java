@@ -36,9 +36,11 @@ public class ReviewsArrayAdapter extends BaseAdapter {
         return reviews.size();
     }
 
+
+
     @Override
     public Object getItem(int i) {
-        return reviews.get(i);
+        return i;
     }
 
     @Override

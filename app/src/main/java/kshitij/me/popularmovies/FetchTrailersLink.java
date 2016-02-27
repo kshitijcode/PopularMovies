@@ -90,12 +90,12 @@ public class FetchTrailersLink extends AsyncTask<Long, Void, ArrayList<String>> 
         }
 
 
-        return addReviewsToArrayList(movieResponseJSONString);
+        return addTrailerToArrayList(movieResponseJSONString);
 
     }
 
 
-    private ArrayList<String> addReviewsToArrayList(String movieResponseJSONString) {
+    private ArrayList<String> addTrailerToArrayList(String movieResponseJSONString) {
 
         try {
             JSONObject rootObject = new JSONObject(movieResponseJSONString);
