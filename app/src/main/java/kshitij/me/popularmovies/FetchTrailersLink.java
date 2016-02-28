@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -22,7 +21,7 @@ import java.util.ArrayList;
  */
 public class FetchTrailersLink extends AsyncTask<Long, Void, ArrayList<String>> {
 
-    protected static ArrayList<String> urlArrayList;
+    protected static ArrayList<String> trailUserList;
     protected String BASE_URL = "http://api.themoviedb.org/3/movie/%s/videos?";
     private HttpURLConnection httpURLConnection;
     private BufferedReader reader;
@@ -32,7 +31,7 @@ public class FetchTrailersLink extends AsyncTask<Long, Void, ArrayList<String>> 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        urlArrayList = new ArrayList<>();
+        trailUserList = new ArrayList<>();
     }
 
     @Override
@@ -102,13 +101,13 @@ public class FetchTrailersLink extends AsyncTask<Long, Void, ArrayList<String>> 
             JSONArray resultsArray = rootObject.getJSONArray("results");
             for (int i = 0; i < resultsArray.length(); i++) {
                 JSONObject eachMovieObject = resultsArray.getJSONObject(i);
-                urlArrayList.add("https://www.youtube.com/watch?v=" + eachMovieObject.getString("key"));
+                trailUserList.add("https://www.youtube.com/watch?v=" + eachMovieObject.getString("key"));
             }
 
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return urlArrayList;
+        return trailUserList;
 
     }
 

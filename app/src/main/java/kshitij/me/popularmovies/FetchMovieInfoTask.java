@@ -98,6 +98,7 @@ public class FetchMovieInfoTask extends AsyncTask<String, Void, ArrayList<Movies
             movieResponseJSONString = buffer.toString();
 
 
+
         } catch (Exception e) {
 
             Log.i("Exceptional", e.getMessage());
