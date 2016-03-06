@@ -10,6 +10,14 @@
     This layout is a two-pane layout for the Items master/detail flow.
     -->
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+
     <fragment
         android:id="@+id/fragment_forecast"
         android:name="kshitij.me.popularmovies.MoviesListFragment"

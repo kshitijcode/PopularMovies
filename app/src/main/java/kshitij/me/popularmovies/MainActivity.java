@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity implements MoviesListFragmen
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         if (findViewById(R.id.movie_detail_container) != null) {
             // The detail container view will be present only in the large-screen layouts
             // (res/layout-sw600dp). If this view is present, then the activity should be
@@ -79,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements MoviesListFragmen
             moviesInfo.setMovieTrailersURL(movieTrailersURL);
             moviesInfo.setArrayListReviews(reviewsArrayList);
             moviesInfo.setRuntime(runtime);
-
             Intent detailsActivity = new Intent(this, DetailsActivity.class);
             detailsActivity.putExtra("id", String.valueOf(moviesInfo.getMovieID()));
             detailsActivity.putExtra("original_title", moviesInfo.getOriginalTitle());
