@@ -26,7 +26,7 @@ public class MoviesListFragment extends android.support.v4.app.Fragment {
 
     GridView gvMoviePoster;
     ArrayList<MoviesInfo> arrayListMoviesInfo;
-    public static String API_KEY = "2aad2ff21ff03455ae9686c168da03ad";
+    public static String API_KEY = "";
     MoviePosterAdapter moviePosterAdapter;
     MoviesInfo moviesInfo;
 
