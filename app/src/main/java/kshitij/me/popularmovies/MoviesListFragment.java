@@ -96,9 +96,11 @@ public class MoviesListFragment extends android.support.v4.app.Fragment {
         if (id == R.id.pref_highest_rated) {
             DEFAULT_SORT_PARAMETER = "vote_average.desc";
             callFetchMovieInfoTask(DEFAULT_SORT_PARAMETER);
+           item.
         } else if (id == R.id.pref_most_popular) {
             DEFAULT_SORT_PARAMETER = "popularity.desc";
             callFetchMovieInfoTask(DEFAULT_SORT_PARAMETER);
+
         } else {
             DEFAULT_SORT_PARAMETER ="Favorite";
             callFetchMovieInfobyIDTask();

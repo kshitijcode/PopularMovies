@@ -65,6 +65,7 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
         if (arguments != null) {
             setValuesForRespectiveViews();
         }
+
         return rootView;
 
     }
