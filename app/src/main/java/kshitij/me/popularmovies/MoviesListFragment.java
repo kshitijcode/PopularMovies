@@ -1,5 +1,7 @@
 package kshitij.me.popularmovies;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,6 +14,8 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -37,7 +41,6 @@ public class MoviesListFragment extends android.support.v4.app.Fragment {
 
         // Get a reference to the ListView, and attach this adapter to it.
         gvMoviePoster = (GridView) rootView.findViewById(R.id.gvMoviePosters);
-        gvMoviePoster.setAdapter(moviePosterAdapter);
         setGridViewListener();
         return rootView;
 
@@ -47,8 +50,8 @@ public class MoviesListFragment extends android.support.v4.app.Fragment {
 
 
         try {
-            arrayListMoviesInfo = new FetchMovieInfoTask(getActivity(),gvMoviePoster,moviePosterAdapter).execute(
-                    default_sort_parameter,API_KEY).get();
+            arrayListMoviesInfo = new FetchMovieInfoTask(getActivity(), gvMoviePoster, moviePosterAdapter).execute(
+                    default_sort_parameter, API_KEY).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -74,35 +77,51 @@ public class MoviesListFragment extends android.support.v4.app.Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
     }
 
     @Override
     public void onStart() {
         super.onStart();
         arrayListMoviesInfo = new ArrayList<>();
+        if(DEFAULT_SORT_PARAMETER.equals("Favorite"))
+            callFetchMovieInfobyIDTask();
+        else
         callFetchMovieInfoTask(DEFAULT_SORT_PARAMETER);
-
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.preferences) {
-            if (item.getTitle().equals("Highest Rated")) {
-                DEFAULT_SORT_PARAMETER = "vote_average.desc";
-                callFetchMovieInfoTask(DEFAULT_SORT_PARAMETER);
-                item.setTitle("Most Popular");
-            } else {
-                DEFAULT_SORT_PARAMETER = "popularity.desc";
-                callFetchMovieInfoTask(DEFAULT_SORT_PARAMETER);
-                item.setTitle("Highest Rated");
+        if (id == R.id.pref_highest_rated) {
+            DEFAULT_SORT_PARAMETER = "vote_average.desc";
+            callFetchMovieInfoTask(DEFAULT_SORT_PARAMETER);
+        } else if (id == R.id.pref_most_popular) {
+            DEFAULT_SORT_PARAMETER = "popularity.desc";
+            callFetchMovieInfoTask(DEFAULT_SORT_PARAMETER);
+        } else {
+            DEFAULT_SORT_PARAMETER ="Favorite";
+            callFetchMovieInfobyIDTask();
 
+        }
+        return false;
+    }
+
+    private void callFetchMovieInfobyIDTask() {
+
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("Movies Id Preferences", Context.MODE_PRIVATE);
+        Set<String> mFavoritesId = sharedPref.getStringSet("id", null);
+        Iterator iterator = mFavoritesId.iterator();
+        while (iterator.hasNext()) {
+            try {
+                arrayListMoviesInfo = new FetchMovieInfoById(getActivity(), gvMoviePoster, moviePosterAdapter).execute(iterator.next().toString(), API_KEY).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
             }
         }
-
-        return false;
     }
 
     @Override

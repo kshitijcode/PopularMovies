@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.GridView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,9 +21,9 @@ import java.util.ArrayList;
  */
 
 
-public class FetchMovieInfoTask extends AsyncTask<String, Void, ArrayList<MoviesInfo>> {
+public class FetchMovieInfoById extends AsyncTask<String, Void, ArrayList<MoviesInfo>> {
 
-    protected String BASE_URL = "http://api.themoviedb.org/3/discover/movie?";
+    protected String BASE_URL = "http://api.themoviedb.org/3/movie/%s?";
     private HttpURLConnection httpURLConnection;
     private BufferedReader reader;
     private String movieResponseJSONString;
@@ -35,7 +34,7 @@ public class FetchMovieInfoTask extends AsyncTask<String, Void, ArrayList<Movies
     private Context mContext;
     private GridView gridView;
 
-    public FetchMovieInfoTask(Context mContext, GridView gridView
+    public FetchMovieInfoById(Context mContext, GridView gridView
             , MoviePosterAdapter moviePosterAdapter) {
         this.mContext = mContext;
         this.gridView = gridView;
@@ -55,12 +54,11 @@ public class FetchMovieInfoTask extends AsyncTask<String, Void, ArrayList<Movies
     protected ArrayList<MoviesInfo> doInBackground(String... defaultSortParameter) {
 
         try {
-            final String SORT_PARAMETER = "sort_by";
+
             final String API_KEY = "api_key";
 
 
-            Uri builtUri = Uri.parse(BASE_URL).buildUpon()
-                    .appendQueryParameter(SORT_PARAMETER, defaultSortParameter[0])
+            Uri builtUri = Uri.parse(String.format(BASE_URL, defaultSortParameter[0])).buildUpon()
                     .appendQueryParameter(API_KEY, defaultSortParameter[1])
                     .build();
 
@@ -116,29 +114,27 @@ public class FetchMovieInfoTask extends AsyncTask<String, Void, ArrayList<Movies
 
         try {
             JSONObject rootObject = new JSONObject(movieResponseJSONString);
-            JSONArray resultsArray = rootObject.getJSONArray("results");
 
-            for (int i = 0; i < resultsArray.length(); i++) {
-
-                JSONObject eachMovieObject = resultsArray.getJSONObject(i);
-                long movieID = eachMovieObject.getLong("id");
-                String originalTitle = eachMovieObject.getString("original_title");
-                String overView = eachMovieObject.getString("overview");
-                String voteAverage = eachMovieObject.getString("vote_average");
-                String releaseDate = eachMovieObject.getString("release_date");
-                String moviePosterImageURL = MOVIE_POSTER_IMAGE_BASE_URL + eachMovieObject.getString("poster_path");
+            long movieID = rootObject.getLong("id");
+            String originalTitle = rootObject.getString("original_title");
+            String overView = rootObject.getString("overview");
+            String voteAverage = rootObject.getString("vote_average");
+            String releaseDate = rootObject.getString("release_date");
+            String moviePosterImageURL = MOVIE_POSTER_IMAGE_BASE_URL + rootObject.getString("poster_path");
+            String runtime = rootObject.getString("runtime");
 
 
-                moviesInfo = new MoviesInfo(movieID, originalTitle, overView, voteAverage,
-                        releaseDate, moviePosterImageURL);
-                arrayListMoviesInfo.add(moviesInfo);
+            moviesInfo = new MoviesInfo(movieID, originalTitle, overView, voteAverage,
+                    releaseDate, moviePosterImageURL);
+            moviesInfo.setRuntime(runtime);
+            arrayListMoviesInfo.add(moviesInfo);
 
-            }
 
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } catch (JSONException e1) {
+            e1.printStackTrace();
         }
+
+
     }
 
 

@@ -11,20 +11,20 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:text="Reviews"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvReviews"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:textStyle="bold|italic"/>
+        android:textStyle="bold|italic" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>
-
-
-
+        android:layout_height="1dp"
+        android:background="@android:color/black"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"/>
 
 </LinearLayout>

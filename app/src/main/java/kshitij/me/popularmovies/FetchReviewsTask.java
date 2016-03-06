@@ -2,7 +2,6 @@ package kshitij.me.popularmovies;
 
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 
 public class FetchReviewsTask extends AsyncTask<Long, Void, ArrayList<String>> {
 
-    protected static ArrayList<String> urlArrayList;
+    protected static ArrayList<String> reviewsList;
     protected String BASE_URL = "http://api.themoviedb.org/3/movie/%s/reviews?";
     private HttpURLConnection httpURLConnection;
     private BufferedReader reader;
@@ -33,7 +32,7 @@ public class FetchReviewsTask extends AsyncTask<Long, Void, ArrayList<String>> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        urlArrayList = new ArrayList<>();
+        reviewsList = new ArrayList<>();
     }
 
 
@@ -54,7 +53,7 @@ public class FetchReviewsTask extends AsyncTask<Long, Void, ArrayList<String>> {
 
         }
 
-        Log.i("URL", url.toString());
+
 
         try {
             httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -88,12 +87,15 @@ public class FetchReviewsTask extends AsyncTask<Long, Void, ArrayList<String>> {
 
 
         } catch (Exception e) {
-
         }
-
 
         return addReviewsToArrayList(movieResponseJSONString);
 
+    }
+
+    @Override
+    protected void onPostExecute(ArrayList<String> strings) {
+        super.onPostExecute(strings);
     }
 
     private ArrayList<String> addReviewsToArrayList(String movieResponseJSONString) {
@@ -103,14 +105,14 @@ public class FetchReviewsTask extends AsyncTask<Long, Void, ArrayList<String>> {
             JSONArray resultsArray = rootObject.getJSONArray("results");
             for (int i = 0; i < resultsArray.length(); i++) {
                 JSONObject eachMovieObject = resultsArray.getJSONObject(i);
-                urlArrayList.add(eachMovieObject.getString("author") + "-->" + eachMovieObject.getString("content"));
+                reviewsList.add(eachMovieObject.getString("author") + "-->" + eachMovieObject.getString("content"));
 
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return urlArrayList;
+        return reviewsList;
 
     }
 }

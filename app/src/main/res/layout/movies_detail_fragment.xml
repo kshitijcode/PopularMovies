@@ -48,8 +48,20 @@
                         android:textColor="#000000"
                         android:textSize="20sp"
                         android:textStyle="italic"
+                        />
+
+
+                    <TextView
+                        android:id="@+id/tvRunningTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:textColor="#000000"
+                        android:textSize="20sp"
+                        android:textStyle="italic"
 
                         />
+
 
                     <TextView
                         android:id="@+id/tvRating"
@@ -103,13 +115,14 @@
                     android:textSize="30sp"
                     android:textStyle="bold|italic" />
 
-                <ListView
-                    android:id="@+id/lvTrailers"
+                <LinearLayout
+                    android:id="@+id/llTrailersContainer"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
 
-                </ListView>
+                </LinearLayout>
 
 
                 <TextView
@@ -122,14 +135,14 @@
                     android:textStyle="bold|italic" />
 
 
-                <ListView
-                    android:id="@+id/lvReviews"
+                <LinearLayout
+                    android:id="@+id/llReviewsContainer"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
 
-                </ListView>
-
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
