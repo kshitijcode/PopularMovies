@@ -75,9 +75,6 @@ public class MainActivity extends AppCompatActivity implements MoviesListFragmen
 
             initializeDetails(moviesInfo);
 
-            moviesInfo.setMovieTrailersURL(movieTrailersURL);
-            moviesInfo.setArrayListReviews(reviewsArrayList);
-            moviesInfo.setRuntime(runtime);
             Intent detailsActivity = new Intent(this, DetailsActivity.class);
             detailsActivity.putExtra("id", String.valueOf(moviesInfo.getMovieID()));
             detailsActivity.putExtra("original_title", moviesInfo.getOriginalTitle());
@@ -116,6 +113,10 @@ public class MainActivity extends AppCompatActivity implements MoviesListFragmen
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
+        moviesInfo.setMovieTrailersURL(movieTrailersURL);
+        moviesInfo.setArrayListReviews(reviewsArrayList);
+        moviesInfo.setRuntime(runtime);
     }
 
 

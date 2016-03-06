@@ -38,9 +38,6 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
         super.onCreate(savedInstanceState);
 
         arguments = getArguments();
-        if (arguments == null) {
-
-        }
         mSetFavorites = new HashSet();
     }
 
@@ -65,7 +62,9 @@ public class DetailsFragment extends android.support.v4.app.Fragment {
         videoContainer = (ViewGroup) rootView.findViewById(R.id.llTrailersContainer);
         reviewContainer = (ViewGroup) rootView.findViewById(R.id.llReviewsContainer);
         tvRunningTime = (TextView) rootView.findViewById(R.id.tvRunningTime);
-        setValuesForRespectiveViews();
+        if (arguments != null) {
+            setValuesForRespectiveViews();
+        }
         return rootView;
 
     }
